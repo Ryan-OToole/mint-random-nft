@@ -132,7 +132,7 @@ const App = () => {
                 :
             <div>
               <p className="sub-text">
-                {`${nftCount}/25 NFTs Minted So Far... Get one before they run out...`}
+                {`${nftCount}/25 NFTs Minted So Far...`}
               </p>
               <p className="sub-text">
                 <a href={`https://testnets.opensea.io/assets/goerli/${CONTRACT_ADDRESS}/${nftCount}`}>View the Latest NFT here. What will yours look like?</a>
