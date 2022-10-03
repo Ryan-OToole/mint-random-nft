@@ -126,17 +126,19 @@ const App = () => {
                 {`${nftCount}/25 NFTs Minted. Max # of NFTs met for this contract`}
             </p>
             <p className="sub-text">
-            <a href={`https://testnets.opensea.io/assets/goerli/${CONTRACT_ADDRESS}/3`}>Enjoy the last NFT of the collection here</a>
-              
+              <a href={`https://testnets.opensea.io/assets/goerli/${CONTRACT_ADDRESS}/${nftCount}`}>Enjoy the last NFT of the collection here</a>
             </p>
           </div>
-
-
                 :
-          <p className="sub-text">
-            {`${nftCount}/25 NFTs Minted So Far...`}
-          </p>
-          }
+            <div>
+              <p className="sub-text">
+                {`${nftCount}/25 NFTs Minted So Far... Get one before they run out...`}
+              </p>
+              <p className="sub-text">
+                <a href={`https://testnets.opensea.io/assets/goerli/${CONTRACT_ADDRESS}/${nftCount}`}>Your NFT could look like this</a>
+              </p>
+          </div>
+        }
  
           {currentAccount === ""
             ? renderNotConnectedContainer()
