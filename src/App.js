@@ -114,9 +114,9 @@ const App = () => {
     <div className="App">
       <div className="container">
         <div className="header-container">
-          <p className="header gradient-text">My NFT Collection</p>
+          <p className="header gradient-text">Gentle Again NFTs</p>
           <p className="sub-text">
-            Each unique. Each beautiful. Discover your NFT today.
+            Each unique. Each beautiful. Discover your softer side today.
           </p>
           {
             nftCount === 25 
