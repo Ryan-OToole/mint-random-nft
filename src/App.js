@@ -5,15 +5,16 @@ import { ethers } from "ethers";
 import myEpicNFT from './myEpicNFT.json';
 
 // Constants
-const TWITTER_HANDLE = 'web3ForToday';
+const TWITTER_HANDLE = 'plentyWeb3';
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
-const CONTRACT_ADDRESS = '0x4DBc004223F0E6436DbeDCF39072253f2109D41B';
+const CONTRACT_ADDRESS = '0x4F9BFdB5Dc8457D8D083B1853449dC3249e908aE';
 // const OPENSEA_LINK = '';
 // const TOTAL_MINT_COUNT = 50;
 
 const App = () => {
   // Render Methods
   const [currentAccount, setCurrentAccount] = useState("");
+  const [nftCount, setNftCount] = useState(0);
 
   const checkIfWalletIsConnected = async () => {
     const { ethereum } = window;
@@ -53,9 +54,9 @@ const App = () => {
       let chainId = await ethereum.request({ method: 'eth_chainId' });
       console.log("Connected to chain " + chainId);
       // String, hex code of the chainId of the Rinkebey test network
-      const rinkebyChainId = "0x4";
-      if (chainId !== rinkebyChainId) {
-        alert("You are not connected to the Rinkeby Test Network!");
+      const goerliChainId = "0x5";
+      if (chainId !== goerliChainId) {
+        alert("You are not connected to the Goerli Test Network!");
       }
       const accounts = await ethereum.request({ method: "eth_requestAccounts" });
       console.log('connected:', accounts[0]);
@@ -73,9 +74,14 @@ const App = () => {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
         const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNFT.abi, signer);
+        let totalSupply = await connectedContract.totalSupply();
+        totalSupply = totalSupply.toNumber();
+        console.log('totalSupply', totalSupply);
+        setNftCount(totalSupply - 1);
         connectedContract.on("newEpicNFTMinted", (from, tokenId) => {
           console.log(from, tokenId.toNumber());
-          alert(`Hey there! We've minted your NFT and sent it to your wallet. It may be blank right now. It can take a max of 10 min to show up on OpenSea. Here's the link: https://testnets.opensea.io/assets/${CONTRACT_ADDRESS}/${tokenId.toNumber()}`)
+          setNftCount(tokenId.toNumber());
+          alert(`Hey there! We've minted your NFT and sent it to your wallet. It may be blank right now. It can take a max of 10 min to show up on Opensea. Here's the link: https://testnets.opensea.io/assets/goerli/${CONTRACT_ADDRESS}/${tokenId.toNumber()}`)
         })
       }
     } catch (error) {
@@ -93,7 +99,7 @@ const App = () => {
         let nftTxn = await connectedContract.makeAnEpicNFT();
         console.log('mining please wait');
         await nftTxn.wait();
-        console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
+        console.log(`Mined, see transaction: https://goerli.etherscan.io/tx/${nftTxn.hash}`);
       }
     } catch (error) {
       console.log('error', error);
@@ -112,13 +118,33 @@ const App = () => {
           <p className="sub-text">
             Each unique. Each beautiful. Discover your NFT today.
           </p>
+          {
+            nftCount === 25 
+                ?
+          <div>
+            <p className="sub-text">
+                {`${nftCount}/25 NFTs Minted. Max # of NFTs met for this contract`}
+            </p>
+            <p className="sub-text">
+            <a href={`https://testnets.opensea.io/assets/goerli/${CONTRACT_ADDRESS}/3`}>Enjoy the last NFT of the collection here</a>
+              
+            </p>
+          </div>
+
+
+                :
+          <p className="sub-text">
+            {`${nftCount}/25 NFTs Minted So Far...`}
+          </p>
+          }
+ 
           {currentAccount === ""
             ? renderNotConnectedContainer()
             : (
               /** Add askContractToMintNft Action for the onClick event **/
               <button onClick={askConractToMintNFT} className="cta-button connect-wallet-button">
                 Mint NFT
-                </button>
+              </button>
             )
           }
         </div>
