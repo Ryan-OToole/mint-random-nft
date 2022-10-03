@@ -7,7 +7,7 @@ import myEpicNFT from './myEpicNFT.json';
 // Constants
 const TWITTER_HANDLE = 'plentyWeb3';
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
-const CONTRACT_ADDRESS = '0x4F9BFdB5Dc8457D8D083B1853449dC3249e908aE';
+const CONTRACT_ADDRESS = '0xff00c37B3075389b8e68D7d8b19D08B1C0cB2bad';
 // const OPENSEA_LINK = '';
 // const TOTAL_MINT_COUNT = 50;
 
